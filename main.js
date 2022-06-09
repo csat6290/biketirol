@@ -91,5 +91,14 @@ let gpxTrack = new L.GPX("../data/06.gpx", {
 
 gpxTrack.on("loaded", function(evt){
     //console.log("loaded gpx event: ", evt);
-    map.fitBounds(evt.target.getBounds());
+    let gpxLayer = evt.target;
+    map.fitBounds(gpxLayer.getBounds());
+    let popup = `<h3>Etappe 06: Ehrwald - Scharnitz</h3>
+    <ul>
+    <li>Streckenlänge: ${(gpxLayer.get_distance()/1000).toFixed()} km</li>
+    <li>tiefster Punkt: ${gpxLayer.get_elevation_min().toFixed()} m</li>
+    <li>höchster Punkt: ${gpxLayer.get_elevation_max().toFixed()} m</li>
+    <li>Höhenmeter bergauf: ${gpxLayer.get_elevation_gain().toFixed()} m</li>
+    <li>Höhenmeter bergab: ${gpxLayer.get_elevation_loss().toFixed()} m</li>`;
+    gpxLayer.bindPopup(popup);
 });
